@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { Link, } from "react-router-dom";
 import {rules} from "../utils/rules";
+import {useAppDispatch} from "../hooks/useAppDispatch"
 
 const LoginForm = () => {
-    
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const [data, setData] = useState({});
+    const {login} = useAppDispatch();
 
-    const submit = (e) => {
-        console.log(e);
+    const onChange = (field) => {
+        setData({
+            ...data,
+            [field.name]: field.value
+        });
     }
 
+    const submit = (e) => {
+        login()
+    }
 
     return (
         <Form
@@ -28,8 +34,9 @@ const LoginForm = () => {
             rules={[rules.required('Введите логин')]}
         >
             <Input
-                value={userName}
-                onChange={e => setUserName(e.target.value)}
+                name="username"
+                value={data?.username ? data?.username : ""}
+                onChange={e => onChange(e.target)}
             />
         </Form.Item>
 
@@ -39,9 +46,10 @@ const LoginForm = () => {
             rules={[rules.required('Введите пароль')]}
         >
             <Input.Password
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                type={password}
+                name="password"
+                value={data?.password ? data?.password : ""}
+                onChange={e => onChange(e.target)}
+                type={"password"}
             />
         </Form.Item>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Layout, Row, Col } from "antd";
 import Listing from '../components/List';
 import { Typography } from 'antd';
+import api from "../utils/api";
 
 const { Title } = Typography;
 
@@ -10,9 +11,7 @@ const Recipes = () => {
 
     useEffect(() => {
         try {
-            const dba = fetch('https://638dca13aefc455fb2ac04c7.mockapi.io/items')
-                .then(res => res.json())
-                .then(data => setRecipes(data));
+            api.get("/items").then(res => setRecipes(res.data));
         } catch (error) {
             console.log(error);
         }
@@ -25,7 +24,7 @@ const Recipes = () => {
                     <Title justify="center">Список рецептов</Title>
                 </Col>
                 <Col span={15}>
-                <Listing items={recipes}/>
+                    <Listing items={recipes} />
                 </Col>
             </Row>
         </Layout>
