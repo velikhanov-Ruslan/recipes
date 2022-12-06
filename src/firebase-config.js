@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import {getFirestore} from "@firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyAqzICMx6SEOwy-VL0bqzYtBrmPfa-nMYA",
-	authDomain: "todo-8677c.firebaseapp.com",
-	projectId: "todo-8677c",
-	storageBucket: "todo-8677c.appspot.com",
-	messagingSenderId: "1093026794517",
-	appId: "1:1093026794517:web:6d35307521e647c19c121c"
+  apiKey: "AIzaSyC6iMMoMr3r0jzVo9gnnH7J4MMPC993QNE",
+  authDomain: "recipes-7508b.firebaseapp.com",
+  projectId: "recipes-7508b",
+  storageBucket: "recipes-7508b.appspot.com",
+  messagingSenderId: "612613389475",
+  appId: "1:612613389475:web:8a799ed5ee0ffac650d316"
 };
 
 const app = initializeApp(firebaseConfig);

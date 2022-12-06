@@ -2,17 +2,7 @@ import React from "react";
 import {List } from 'antd';
 import RecipesItem from "./RecipesItem";
 
-const Listing =(items) => {
-    const data = Array.from({
-        length: 10,
-      }).map((_, i) => ({
-        href: 'https://ant.design',
-        title: `крабовый салат ${i}`,
-        description:
-          'Салат из крабовых палочек с кукурузой, рисом и вареными яйцами - вкусная и очень популярная закуска. Рецепт крабового салата с кукурузой прост в исполнении - салат не требует сложных ингредиентов и готовится достаточно быстро.',
-        content:
-          'крабовые палочки, кукуруза консервированная, рис, рис отварной, яйца, соль, майонез, зелень',
-      }));
+const Listing =({items}) => {
 
     return (
         <List
@@ -24,7 +14,7 @@ const Listing =(items) => {
           },
           pageSize: 3,
         }}
-        dataSource={data}
+        dataSource={items}
         renderItem={(item) => (
             <RecipesItem {...item}/>
         )}

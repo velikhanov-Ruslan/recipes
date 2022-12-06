@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Row } from "antd";
+import { Layout, Row, Col } from "antd";
 import Listing from '../components/List';
 import { Typography } from 'antd';
-import {db} from "../firebase-config";
-import {collection, getDocs} from "firebase/firestore"
 
 const { Title } = Typography;
 
 const Recipes = () => {
-    const [recipes, setRecipes] = useState();
-    const recipesCollectionRef = collection(db, "recipes")
+    const [recipes, setRecipes] = useState([]);
 
     useEffect(() => {
-        const getUsers = async () => {
-            const data = await getDocs(recipesCollectionRef);
-            setRecipes(data.docs.map(doc => ({...doc.data(), id: doc.id})));
-            console.log(data);
+        try {
+            const dba = fetch('https://638dca13aefc455fb2ac04c7.mockapi.io/items')
+                .then(res => res.json())
+                .then(data => setRecipes(data));
+        } catch (error) {
+            console.log(error);
         }
-
-        getUsers()
     }, [])
 
     return (
         <Layout>
             <Row align='middle' className={"row row--recipes"}>
-                <Title>Список рецептов</Title>
-                <Listing />
+                <Col>
+                    <Title justify="center">Список рецептов</Title>
+                </Col>
+                <Col span={15}>
+                <Listing items={recipes}/>
+                </Col>
             </Row>
         </Layout>
     )

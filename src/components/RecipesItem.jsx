@@ -3,7 +3,7 @@ import { LikeOutlined } from '@ant-design/icons';
 import { List, Space } from "antd";
 import { Link } from 'react-router-dom';
 
-const RecipesItem = ({ title, description, content }) => {
+const RecipesItem = ({ title, composition, description, complexity, likes, img }) => {
 	const IconText = ({ icon, text }) => (
 		<Space>
 			{React.createElement(icon)}
@@ -15,23 +15,23 @@ const RecipesItem = ({ title, description, content }) => {
 			<List.Item
 				key={title}
 				actions={[
-					<IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-					<div>Сложность: низка</div>,
+					<IconText icon={LikeOutlined} text={likes} key="list-vertical-like-o" />,
+					<div>Сложность: {complexity === 1 ? "Легкая" : "Средняя"}</div>,
 					<Link to={"/item"}>Подробнее о рецепте</Link>
 				]}
 				extra={
 					<img
-						width={272}
+						width={190}
 						alt="logo"
-						src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+						src={img}
 					/>
 				}
 			>
 				<List.Item.Meta
 					title={title}
-					description={description}
+					description={composition.join(", ")}
 				/>
-				{content}
+				{description}
 			</List.Item>
 		</>
 	)

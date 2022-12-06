@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Layout>
       <NavBar />
-      <Content>
+      <Content >
         <AppRouter />
       </Content>
     </Layout>
