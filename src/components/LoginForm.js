@@ -1,70 +1,73 @@
 import React, { useState } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Space} from "antd";
 import { Link, } from "react-router-dom";
-import {rules} from "../utils/rules";
-import {useAppDispatch} from "../hooks/useAppDispatch"
+import Error from "./Error";
+import { rules } from "../utils/rules";
+import { useAppDispatch } from "../hooks/useAppDispatch"
+import { useSelector } from "react-redux";
 
 const LoginForm = () => {
-    const [data, setData] = useState({});
-    const {login} = useAppDispatch();
+	const [data, setData] = useState({});
+	const { isLoading, error } = useSelector(state => state.auth);
+	const { login } = useAppDispatch();
 
-    const onChange = (field) => {
-        setData({
-            ...data,
-            [field.name]: field.value
-        });
-    }
+	const onChange = (field) => {
+		setData({
+			...data,
+			[field.name]: field.value
+		});
+	}
 
-    const submit = (e) => {
-        login()
-    }
+	const submit = () => {
+		login(data);
+		setData({});
+	}
 
-    return (
-        <Form
-        name="basic"
-        labelCol={{span: 8}}
-        wrapperCol={{span: 16}}
-        initialValues={{remember: true}}
-        onFinish={submit}
-        autoComplete="off"
-    >
-        <Form.Item
-            label="Имя"
-            name="username"
-            rules={[rules.required('Введите логин')]}
-        >
-            <Input
-                name="username"
-                value={data?.username ? data?.username : ""}
-                onChange={e => onChange(e.target)}
-            />
-        </Form.Item>
-
-        <Form.Item
-            label="Пароль"
-            name="password"
-            rules={[rules.required('Введите пароль')]}
-        >
-            <Input.Password
-                name="password"
-                value={data?.password ? data?.password : ""}
-                onChange={e => onChange(e.target)}
-                type={"password"}
-            />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{offset: 12, span: 16}}>
-            <Button type="primary" htmlType="submit" >
-                Войти
-            </Button>
-        </Form.Item>
-
-        <Form.Item wrapperCol={{offset: 12, span: 16}}>
-                <Link to={"/recipes"}>Пропустить</Link>
-        </Form.Item>
-    </Form>
-
-    )
+	return (
+		<Space size={[0, 20]} direction="vertical">
+			{error && <Error textError={error}/>}
+			<Form
+				name="basic"
+				labelCol={{ span: 8 }}
+				wrapperCol={{ span: 16 }}
+				initialValues={{ remember: true }}
+				onFinish={submit}
+				autoComplete="off"
+			>
+				<Form.Item
+					label="Имя"
+					name="username"
+					rules={[rules.required('Введите логин')]}
+				>
+					<Input
+						name="username"
+						value={data?.username ? data?.username : ""}
+						onChange={e => onChange(e.target)}
+					/>
+				</Form.Item>
+				<Form.Item
+					label="Пароль"
+					name="password"
+					rules={[rules.required('Введите пароль')]}
+				>
+					<Input.Password
+						name="password"
+						value={data?.password ? data?.password : ""}
+						onChange={e => onChange(e.target)}
+						type={"password"}
+					/>
+				</Form.Item>
+				<Form.Item wrapperCol={{ offset: 12, span: 16 }}>
+					<Button type="primary" htmlType="submit" loading={isLoading}>
+						Войти
+					</Button>
+				</Form.Item>
+				<Form.Item wrapperCol={{ offset: 12, span: 16 }}>
+					<Link to={"/recipes"}>Пропустить</Link>
+				</Form.Item>
+			</Form>
+		</Space>
+	)
 }
 
 export default LoginForm;

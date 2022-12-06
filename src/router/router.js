@@ -3,7 +3,8 @@ import Recipes from "../pages/Recipes";
 
 export const routeNames = {
 	LOGIN: "/login",
-	RECIPES: "/recipes"
+	RECIPES: "/recipes",
+	DETAIL: "/recipes/:id"
 }
 
 export const routes = [
