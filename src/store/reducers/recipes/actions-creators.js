@@ -21,6 +21,7 @@ export const recipesActionCreators = {
 			const data = await api.get(`items?search=${inputData}`).then(res => res.data);
 			if (data) {
 				dispatch(recipesActionCreators.setRecipes(data));
+				dispatch(recipesActionCreators.getRecipes());
 				dispatch(recipesActionCreators.setIsLoading(false));
 			}
 		} catch (error) {
@@ -38,6 +39,27 @@ export const recipesActionCreators = {
 			}
 		} catch (error) {
 			dispatch(recipesActionCreators.setIsError('произошла ошибка'));
+		}
+	},
+
+	createRecipe: (...data) => async (dispatch) => {
+		try {
+			dispatch(recipesActionCreators.setIsLoading(true));
+			await api.post(`items`, ...data);
+			dispatch(recipesActionCreators.setRecipes(data));
+		} catch (error) {
+			dispatch(recipesActionCreators.setIsLoading(false));
+		}
+	},
+
+	deleteRecipe: (id) => async (dispatch) => {
+		try {
+			dispatch(recipesActionCreators.setIsLoading(true));
+			await api.delete(`items/${id}`);
+			dispatch(recipesActionCreators.getRecipes());
+		} catch (error) {
+			dispatch(recipesActionCreators.setIsError('произошла ошибка'));
+			dispatch(recipesActionCreators.setIsLoading(false));
 		}
 	},
 

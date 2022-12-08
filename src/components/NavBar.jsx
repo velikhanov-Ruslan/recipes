@@ -12,8 +12,8 @@ const { Text } = Typography;
 const NavBar = () => {
 	const { isAuth, user, isLoading } = useSelector(state => state.auth);
 	const { logOut } = useAppDispatch();
-	const { pathname } = useLocation();
 	const navigate = useNavigate();
+	const { pathname } = useLocation();
 
 	const handleClickLogOut = () => {
 		logOut();
@@ -58,4 +58,4 @@ const NavBar = () => {
 	)
 }
 
-export default NavBar
+export default NavBar;

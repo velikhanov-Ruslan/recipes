@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { LikeOutlined } from '@ant-design/icons';
-import { List, Space } from "antd";
+import { List, Space, Button } from "antd";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../hooks/useAppDispatch';
 
 const RecipesItem = ({ title, composition, description, complexity, likes, img, id }) => {
 	const IconText = ({ icon, text }) => (
@@ -10,14 +12,33 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 			{text}
 		</Space>
 	);
+
+	const { isAuth } = useSelector(state => state.auth);
+	const [likesCount, setLikesCount] = useState(likes);
+	const [controller, setController] = useState(true);
+
+	const setLike = () => {
+		setController(prev => !prev);
+		setLikesCount(prev => controller ? prev + 1 : prev - 1);
+	}
+
+	const {deleteRecipe} = useAppDispatch();
+
+	const handleClickDeleteButton = () => {
+		deleteRecipe(id);
+	}
+
 	return (
 		<>
 			<List.Item
 				key={title}
 				actions={[
-					<IconText icon={LikeOutlined} text={likes} key="list-vertical-like-o" />,
+					isAuth ? <Button onClick={setLike} >
+						<IconText icon={LikeOutlined} text={likesCount ? likesCount : 0} key="list-vertical-like-o" />
+					</Button> : null,
 					<div>Сложность: {complexity === 1 ? "Легкая" : "Средняя"}</div>,
-					<Link to={`/recipes/${id}`}>Подробнее о рецепте</Link>
+					<Link to={`/recipes/${id}`}>Подробнее о рецепте</Link>,
+					isAuth ? <Button onClick={handleClickDeleteButton}>Удалить рецепт</Button> : null
 				]}
 				extra={
 					<img
@@ -29,7 +50,7 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 			>
 				<List.Item.Meta
 					title={title}
-					description={composition.join(", ")}
+					description={Array.isArray(composition) ? composition.join(", ") : composition}
 				/>
 				{description}
 			</List.Item>

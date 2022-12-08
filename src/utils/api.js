@@ -12,4 +12,10 @@ export default class api {
 			params: data,
 		});
 	}
+
+	static delete(url, data = {}) {
+		return axios.delete(url, {
+			params: data,
+		});
+	}
 }

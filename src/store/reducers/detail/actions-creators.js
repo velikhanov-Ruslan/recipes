@@ -7,7 +7,7 @@ export const detailActionCreators = {
 			dispatch(detailActionCreators.setIsLoading(true));
 			const data = await api.get(`items?id=${id}`).then(res => res.data);
 			if (data) {
-				dispatch(detailActionCreators.setDetail(data[0]));
+				dispatch(detailActionCreators.setDetail(...data));
 				dispatch(detailActionCreators.setIsLoading(false));
 			}
 		} catch (error) {

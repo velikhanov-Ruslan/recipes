@@ -8,3 +8,6 @@
   height: calc(100vh - 64px);
   flex-direction: column;
 }
+.row--detail {
+  height: 100%;
+}

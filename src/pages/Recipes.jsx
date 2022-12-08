@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
-import { Layout, Row, Col } from "antd";
+import React, { useEffect, useState } from 'react';
+import { Layout, Row, Col, Modal, Button } from "antd";
 import Listing from '../components/List';
 import { Typography, Select } from 'antd';
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import SearchField from "../components/SearchField";
+import CreateForm from "../components/CreateForm";
+
 const { Title } = Typography;
 
 const Recipes = () => {
 	const { getRecipes, searchRecipes, sortRecipes } = useAppDispatch();
 	const { recipes, isLoading } = useSelector(state => state.recipes);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
 		getRecipes();
@@ -19,12 +22,28 @@ const Recipes = () => {
 	const handleInput = (e) => {
 		searchRecipes(e.target.value)
 	}
+
 	const handleChange = (value) => {
-		sortRecipes(value, "desc");
+		sortRecipes(value, value);
 	}
+
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
 
 	return (
 		<Layout>
+			<Modal
+				title="Форма создания рецепта"
+				open={isModalOpen}
+				onCancel={handleCancel}
+				footer={[
+					<Button onClick={handleCancel} key={"back"}>Отмена</Button>
+				]}
+			>
+				<CreateForm closeModal={handleCancel}/>
+			</Modal>
 			<Row align='middle' className={"row row--recipes"}>
 				<Col>
 					<Title justify="center">{recipes ? "Список рецептов" : "Не найдено"}</Title>
@@ -35,19 +54,27 @@ const Recipes = () => {
 					<Select
 						defaultValue="Сложности"
 						style={{ width: 190, marginTop: "20px" }}
-						onBlur={e => console.log(e)}
 						onChange={handleChange}
 						options={[
 							{
 								value: "complexity",
-								label: 'Сложности',
+								label: 'Сложности ASC',
+							},
+							{
+								value: "-complexity",
+								label: 'Сложности DESC',
 							},
 							{
 								value: "likes",
-								label: 'Количеству лайков'
-							}
+								label: 'Количеству лайков ASC'
+							},
+							{
+								value: "-likes",
+								label: 'Количеству лайков DESC'
+							},
 						]}
 					/>
+					<Button onClick={() => setIsModalOpen(!isModalOpen)}>Создать рецепт</Button>
 					{
 						isLoading
 							? <Spinner loading={isLoading} />
