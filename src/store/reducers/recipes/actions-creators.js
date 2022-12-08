@@ -29,10 +29,10 @@ export const recipesActionCreators = {
 		}
 	},
 
-	sortRecipes: (label, order) => async (dispatch) => {
+	sortRecipes: (label) => async (dispatch) => {
 		try {
 			dispatch(recipesActionCreators.setIsLoading(true));
-			const data = await api.get(`items?sortBy=${label}&order=${order}`).then(res => res.data);
+			const data = await api.get(`items?sortBy=${label}`).then(res => res.data);
 			if (data) {
 				dispatch(recipesActionCreators.setRecipes(data));
 				dispatch(recipesActionCreators.setIsLoading(false));
@@ -47,6 +47,7 @@ export const recipesActionCreators = {
 			dispatch(recipesActionCreators.setIsLoading(true));
 			await api.post(`items`, ...data);
 			dispatch(recipesActionCreators.setRecipes(data));
+			dispatch(recipesActionCreators.getRecipes());
 		} catch (error) {
 			dispatch(recipesActionCreators.setIsLoading(false));
 		}
@@ -59,6 +60,18 @@ export const recipesActionCreators = {
 			dispatch(recipesActionCreators.getRecipes());
 		} catch (error) {
 			dispatch(recipesActionCreators.setIsError('произошла ошибка'));
+			dispatch(recipesActionCreators.setIsLoading(false));
+		}
+	},
+
+	updateRecipe: (id, data) => async (dispatch) => {
+		try {
+			dispatch(recipesActionCreators.setIsLoading(true));
+			await api.put(`items/${id}`, data)
+			dispatch(recipesActionCreators.getRecipes());
+			dispatch(recipesActionCreators.setIsLoading(true));
+		} catch (error) {
+			dispatch(recipesActionCreators.setIsError(`${error}`));
 			dispatch(recipesActionCreators.setIsLoading(false));
 		}
 	},

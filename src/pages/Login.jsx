@@ -16,7 +16,7 @@ const Login = () => {
 
 	return (
 		<Layout>
-			<Row justify={'center'} align='middle' className={"row"}>
+			<Row justify={'center'} align='middle' className={"row row--full-height"}>
 				<LoginForm />
 			</Row>
 		</Layout>

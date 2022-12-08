@@ -3,7 +3,7 @@ import { Space, Spin } from 'antd';
 
 const Spinner = ({ loading }) => {
 	return (
-		<Space size="middle">
+		<Space style={{marginTop: "50px"}} size="large">
 			<Spin size="large" spinning={loading} />
 		</Space>
 	)

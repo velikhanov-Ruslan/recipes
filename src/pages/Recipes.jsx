@@ -13,6 +13,7 @@ const { Title } = Typography;
 const Recipes = () => {
 	const { getRecipes, searchRecipes, sortRecipes } = useAppDispatch();
 	const { recipes, isLoading } = useSelector(state => state.recipes);
+	const { isAuth } = useSelector(state => state.auth);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
@@ -24,9 +25,8 @@ const Recipes = () => {
 	}
 
 	const handleChange = (value) => {
-		sortRecipes(value, value);
+		sortRecipes(value)
 	}
-
 
 	const handleCancel = () => {
 		setIsModalOpen(false);
@@ -42,7 +42,7 @@ const Recipes = () => {
 					<Button onClick={handleCancel} key={"back"}>Отмена</Button>
 				]}
 			>
-				<CreateForm closeModal={handleCancel}/>
+				<CreateForm closeModal={handleCancel} />
 			</Modal>
 			<Row align='middle' className={"row row--recipes"}>
 				<Col>
@@ -63,23 +63,14 @@ const Recipes = () => {
 							{
 								value: "-complexity",
 								label: 'Сложности DESC',
-							},
-							{
-								value: "likes",
-								label: 'Количеству лайков ASC'
-							},
-							{
-								value: "-likes",
-								label: 'Количеству лайков DESC'
-							},
+							}
 						]}
 					/>
-					<Button onClick={() => setIsModalOpen(!isModalOpen)}>Создать рецепт</Button>
-					{
-						isLoading
-							? <Spinner loading={isLoading} />
-							: recipes && <Listing items={recipes} />
-					}
+					{isAuth && <Button onClick={() => setIsModalOpen(!isModalOpen)}>Создать рецепт</Button>}
+					{!isLoading && recipes && <Listing items={recipes} />}
+				</Col>
+				<Col>
+					{isLoading && <Spinner loading={isLoading} />}
 				</Col>
 			</Row>
 		</Layout>

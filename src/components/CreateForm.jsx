@@ -5,10 +5,12 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import Error from "./Error";
 
-const CreateForm = ({closeModal}) => {
+const { TextArea } = Input;
+
+const CreateForm = ({ closeModal, type, id}) => {
 	const [data, setData] = useState({});
 	const { isLoading, error } = useSelector(state => state.auth);
-	const { createRecipe, setIsError } = useAppDispatch();
+	const { createRecipe, setIsError, updateRecipe } = useAppDispatch();
 
 	const onChange = (field) => {
 		setData({
@@ -20,8 +22,12 @@ const CreateForm = ({closeModal}) => {
 	}
 
 	const submit = (formData) => {
-		createRecipe(formData);
-		closeModal()
+		if (type === "update") {
+			updateRecipe(id, formData);
+		} else {
+			createRecipe(formData);
+			closeModal();
+		}
 	}
 
 	return (
@@ -81,16 +87,28 @@ const CreateForm = ({closeModal}) => {
 					/>
 				</Form.Item>
 				<Form.Item
-					label="Ингридиенты"
+					label="Ингредиенты"
 					name="composition"
 					rules={[rules.required('Поле обязательно для заполнения')]}
 				>
-					<Input
+					<TextArea
 						name="composition"
-						value={data?.composition ? data?.composition : ""}
+						value={data?.composition ? [...data?.composition] : ""}
 						onChange={e => onChange(e.target)}
 						type={"text"}
-					/>
+					></TextArea>
+				</Form.Item>
+				<Form.Item
+					label="Рецепт:"
+					name="cooking"
+					rules={[rules.required('Поле обязательно для заполнения')]}
+				>
+					<TextArea
+						name="cooking"
+						value={data?.cooking ? data?.cooking : ""}
+						onChange={e => onChange(e.target)}
+						type={"text"}
+					></TextArea>
 				</Form.Item>
 				<Form.Item wrapperCol={{ offset: 12, span: 16 }}>
 					<Button type="primary" htmlType="submit" loading={isLoading}>

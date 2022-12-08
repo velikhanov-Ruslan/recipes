@@ -5,7 +5,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useLocation, useNavigate } from "react-router-dom";
-import { routeNames } from "../router/router";
+import routeNames from "../router";
 
 const { Text } = Typography;
 
@@ -17,11 +17,11 @@ const NavBar = () => {
 
 	const handleClickLogOut = () => {
 		logOut();
-		navigate("/login");
+		navigate(routeNames.LOGIN);
 	}
 
 	const handleClickLogin = () => {
-		navigate("/login");
+		navigate(routeNames.LOGIN);
 	}
 
 	return (

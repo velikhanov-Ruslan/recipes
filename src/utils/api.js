@@ -18,4 +18,8 @@ export default class api {
 			params: data,
 		});
 	}
+
+	static put(url, data) {
+		return axios.put(url, data);
+	}
 }

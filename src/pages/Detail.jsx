@@ -17,26 +17,25 @@ const Detail = () => {
 
 	return (
 		<Layout>
-			<Row align='middle' className={"row row--detail"}>
+			<Row justify={"center"}>
 				{reciep.title && <Col>
 					<Title justify="center">{reciep.title}</Title>
 				</Col>}
-				<Image
-					width={300}
-					src={`../${reciep.img}`}
-				/>
 			</Row>
-			<Row>
-				<List
-					style={{ width: "70%", margin: "0 auto" }}
-					dataSource={reciep.cooking}
-					renderItem={(item, i) => (
-						<List.Item>
-							<Card title={i + 1}>{item}</Card>
-						</List.Item>
-					)}
-				>
-				</List>
+			<Row justify={"center"}>
+				<Col>
+					{reciep.img && <Image
+						width={300}
+						src={`../${reciep.img}`}
+					/>}
+				</Col>
+				<Col>
+					{reciep.cooking &&
+						<Card style={{ width: "50%", margin: "0 auto" }}
+							span={4} title={"Способ приготовления"}>
+							{reciep.cooking}
+						</Card>}
+				</Col>
 			</Row>
 		</Layout>
 	)

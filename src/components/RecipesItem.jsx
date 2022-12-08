@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { LikeOutlined } from '@ant-design/icons';
-import { List, Space, Button } from "antd";
+import { List, Space, Button, Image, Modal } from "antd";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../hooks/useAppDispatch';
+import CreateForm from './CreateForm';
 
 const RecipesItem = ({ title, composition, description, complexity, likes, img, id }) => {
 	const IconText = ({ icon, text }) => (
@@ -16,16 +17,25 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 	const { isAuth } = useSelector(state => state.auth);
 	const [likesCount, setLikesCount] = useState(likes);
 	const [controller, setController] = useState(true);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
 
 	const setLike = () => {
 		setController(prev => !prev);
 		setLikesCount(prev => controller ? prev + 1 : prev - 1);
 	}
 
-	const {deleteRecipe} = useAppDispatch();
+	const { deleteRecipe } = useAppDispatch();
 
 	const handleClickDeleteButton = () => {
 		deleteRecipe(id);
+	}
+
+	const handleUpdateRecipe = () => {
+		setIsModalOpen(true)
 	}
 
 	return (
@@ -38,12 +48,12 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 					</Button> : null,
 					<div>Сложность: {complexity === 1 ? "Легкая" : "Средняя"}</div>,
 					<Link to={`/recipes/${id}`}>Подробнее о рецепте</Link>,
-					isAuth ? <Button onClick={handleClickDeleteButton}>Удалить рецепт</Button> : null
+					isAuth ? <Button onClick={handleClickDeleteButton}>Удалить рецепт</Button> : null,
+					isAuth ? <Button onClick={handleUpdateRecipe}>Изменить рецепт</Button> : null
 				]}
 				extra={
-					<img
-						width={190}
-						alt="logo"
+					<Image
+						width={180}
 						src={img}
 					/>
 				}
@@ -54,6 +64,20 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 				/>
 				{description}
 			</List.Item>
+			<Modal
+				title="Форма обновления рецепта"
+				open={isModalOpen}
+				onCancel={handleCancel}
+				footer={[
+					<Button onClick={handleCancel} key={"back"}>Отмена</Button>
+				]}
+			>
+				<CreateForm
+					closeModal={handleCancel}
+					type={"update"} id={id}
+					composition={composition}
+				/>
+			</Modal>
 		</>
 	)
 }

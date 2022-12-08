@@ -2,7 +2,7 @@ import React from "react";
 import { List } from 'antd';
 import RecipesItem from "./RecipesItem";
 
-const Listing = ({ items }) => {
+const Listing = ({ items, updateReciep }) => {
 
   return (
     <List
