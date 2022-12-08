@@ -17,10 +17,11 @@ const NavBar = () => {
 
 	const handleClickLogOut = () => {
 		logOut();
+		navigate("/login");
 	}
 
 	const handleClickLogin = () => {
-		navigate("/login")
+		navigate("/login");
 	}
 
 	return (

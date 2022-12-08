@@ -1,5 +1,6 @@
 import Login from "../pages/Login";
 import Recipes from "../pages/Recipes";
+import Detail from "../pages/Detail";
 
 export const routeNames = {
 	LOGIN: "/login",
@@ -15,5 +16,9 @@ export const routes = [
 	{
 		path: routeNames.RECIPES,
 		component: Recipes
+	},
+	{
+		path: routeNames.DETAIL,
+		component: Detail
 	},
 ];

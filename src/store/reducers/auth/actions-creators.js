@@ -1,7 +1,7 @@
 import actions from "./actions";
 import api from "../../../utils/api";
 
-export const AuthActionCreators = {
+export const authActionCreators = {
 	setIsError: (error) => ({
 		type: actions.SET_ERROR,
 		payload: error
@@ -24,28 +24,28 @@ export const AuthActionCreators = {
 
 	login: ({ username, password }) => async (dispatch) => {
 		try {
-			dispatch(AuthActionCreators.setIsLoading(true));
+			dispatch(authActionCreators.setIsLoading(true));
 			const response = await api.get("users").then(res => res.data);
 			const mockUser = response.find(u => u.username === username && u.password === password);
 			if (mockUser) {
 				localStorage.setItem("auth", true);
 				localStorage.setItem("username", username);
-				dispatch(AuthActionCreators.setAuth(true));
-				dispatch(AuthActionCreators.setUser(mockUser));
+				dispatch(authActionCreators.setAuth(true));
+				dispatch(authActionCreators.setUser(mockUser));
 			} else {
-				dispatch(AuthActionCreators.setIsError("invalid login or password"));
-				dispatch((AuthActionCreators.setIsLoading(false)));
+				dispatch(authActionCreators.setIsError("invalid login or password"));
+				dispatch((authActionCreators.setIsLoading(false)));
 			}
 
 		} catch (error) {
-			dispatch(AuthActionCreators.setIsError(error));
+			dispatch(authActionCreators.setIsError(error));
 		}
 	},
 
 	logOut: () => async (dispatch) => {
         localStorage.removeItem("auth");
         localStorage.removeItem("username");
-        dispatch(AuthActionCreators.setUser({}));
-        dispatch(AuthActionCreators.setAuth(false));
+        dispatch(authActionCreators.setUser({}));
+        dispatch(authActionCreators.setAuth(false));
     }
 }

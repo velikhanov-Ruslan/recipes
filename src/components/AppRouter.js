@@ -1,38 +1,21 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router';
+import Detail from '../pages/Detail';
 import Login from '../pages/Login';
 import Recipes from '../pages/Recipes';
-import { routeNames, routes } from "../router/router";
 
 const AppRouter = () => {
 	const { isAuth } = useSelector(state => state.auth);
 
 	return (
-		isAuth
-			?
-			<Routes>
-				{routes && routes.map(route => {
-					return <Route
-						key={`route-${route.path}`}
-						path="/"
-						element={<Recipes />}
-					/>
-				})}
-				<Route path="*" element={<Recipes/>} />
-			</Routes>
-			:
-			<Routes>
-				{routes && routes.map(route => {
-					return <Route
-						key={`route-${route.path}`}
-						path="/"
-						element={<Login />}
-					/>
-				})}
-				<Route path={routeNames.RECIPES} element={<Recipes />} />
-				<Route path="*" element={<Login />} />
-			</Routes>
+		<Routes>
+			<Route path="/" element={isAuth ? <Recipes /> : <Login />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/recipes" element={<Recipes />} />
+			<Route path="/recipes/:id" element={<Detail />} />
+			<Route path="*" element={<Recipes />} />
+		</Routes>
 	)
 }
 

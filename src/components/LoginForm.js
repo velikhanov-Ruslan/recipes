@@ -9,18 +9,19 @@ import { useSelector } from "react-redux";
 const LoginForm = () => {
 	const [data, setData] = useState({});
 	const { isLoading, error } = useSelector(state => state.auth);
-	const { login } = useAppDispatch();
+	const { login,setIsError } = useAppDispatch();
 
 	const onChange = (field) => {
 		setData({
 			...data,
 			[field.name]: field.value
 		});
+
+		setIsError("");
 	}
 
 	const submit = () => {
 		login(data);
-		setData({});
 	}
 
 	return (

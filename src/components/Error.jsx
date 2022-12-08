@@ -3,7 +3,7 @@ import { Alert } from "antd";
 
 const Error = ({ textError }) => {
     return (
-        <Alert closable showIcon type="error" message={textError ? textError : ""} />
+        <Alert onClick={e => console.log(e)} closable showIcon type="error" message={textError ? textError : ""} />
     )
 }
 
