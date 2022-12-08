@@ -9,7 +9,7 @@ import SearchField from "../components/SearchField";
 const { Title } = Typography;
 
 const Recipes = () => {
-	const { getRecipes, searchRecipes } = useAppDispatch();
+	const { getRecipes, searchRecipes, sortRecipes } = useAppDispatch();
 	const { recipes, isLoading } = useSelector(state => state.recipes);
 
 	useEffect(() => {
@@ -19,6 +19,9 @@ const Recipes = () => {
 	const handleInput = (e) => {
 		searchRecipes(e.target.value)
 	}
+	const handleChange = (value) => {
+		sortRecipes(value, "desc");
+	}
 
 	return (
 		<Layout>
@@ -27,17 +30,24 @@ const Recipes = () => {
 					<Title justify="center">{recipes ? "Список рецептов" : "Не найдено"}</Title>
 				</Col>
 				<Col span={15}>
-				<SearchField onChange={handleInput}/>
-				Сортировать по:
-				<Select
-					defaultValue="Сложности"
-					style={{ width: 120 }}
-					onChange={handleChange}
-					options={[
-						value: "Сложности",
-						""
-					]}
-				/>
+					<SearchField onChange={handleInput} />
+					Сортировать по:
+					<Select
+						defaultValue="Сложности"
+						style={{ width: 190, marginTop: "20px" }}
+						onBlur={e => console.log(e)}
+						onChange={handleChange}
+						options={[
+							{
+								value: "complexity",
+								label: 'Сложности',
+							},
+							{
+								value: "likes",
+								label: 'Количеству лайков'
+							}
+						]}
+					/>
 					{
 						isLoading
 							? <Spinner loading={isLoading} />

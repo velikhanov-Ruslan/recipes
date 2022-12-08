@@ -28,6 +28,19 @@ export const recipesActionCreators = {
 		}
 	},
 
+	sortRecipes: (label, order) => async (dispatch) => {
+		try {
+			dispatch(recipesActionCreators.setIsLoading(true));
+			const data = await api.get(`items?sortBy=${label}&order=${order}`).then(res => res.data);
+			if (data) {
+				dispatch(recipesActionCreators.setRecipes(data));
+				dispatch(recipesActionCreators.setIsLoading(false));
+			}
+		} catch (error) {
+			dispatch(recipesActionCreators.setIsError('произошла ошибка'));
+		}
+	},
+
 	setRecipes: (data) => ({
 		type: actions.SET_RECIPES,
 		payload: data

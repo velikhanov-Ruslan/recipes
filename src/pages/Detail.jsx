@@ -1,8 +1,6 @@
 import Layout from "antd/es/layout/layout";
 import { Typography, Row, Col, Image, List, Card } from "antd";
-import React, { useEffect, useState } from "react";
-import crab from "../assets/crab.jpg"
-
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useSelector } from "react-redux";
@@ -25,7 +23,7 @@ const Detail = () => {
 				</Col>}
 				<Image
 					width={300}
-					src={crab}
+					src={`../${reciep.img}`}
 				/>
 			</Row>
 			<Row>

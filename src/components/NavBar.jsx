@@ -42,16 +42,16 @@ const NavBar = () => {
 						</Button>
 					</Space>
 					: (pathname === routeNames.LOGIN || pathname === "/")
-							? null
-							: <Space>
-									<Button
-										type="primary"
-										icon={<RollbackOutlined />}
-										onClick={handleClickLogin}
-									>
-										Перейти к авторизации
-									</Button>
-							</Space>
+						? null
+						: <Space>
+							<Button
+								type="primary"
+								icon={<RollbackOutlined />}
+								onClick={handleClickLogin}
+							>
+								Перейти к авторизации
+							</Button>
+						</Space>
 				}
 			</Row>
 		</Header>

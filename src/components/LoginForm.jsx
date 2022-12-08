@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Space} from "antd";
+import { Form, Input, Button, Space } from "antd";
 import { Link, } from "react-router-dom";
 import Error from "./Error";
 import { rules } from "../utils/rules";
@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const LoginForm = () => {
 	const [data, setData] = useState({});
 	const { isLoading, error } = useSelector(state => state.auth);
-	const { login,setIsError } = useAppDispatch();
+	const { login, setIsError } = useAppDispatch();
 
 	const onChange = (field) => {
 		setData({
@@ -26,7 +26,7 @@ const LoginForm = () => {
 
 	return (
 		<Space size={[0, 20]} direction="vertical">
-			{error && <Error textError={error}/>}
+			{error && <Error textError={error} />}
 			<Form
 				name="basic"
 				labelCol={{ span: 8 }}
