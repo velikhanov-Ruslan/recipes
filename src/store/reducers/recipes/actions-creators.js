@@ -42,12 +42,12 @@ export const recipesActionCreators = {
 		}
 	},
 
-	createRecipe: (...data) => async (dispatch) => {
+	createRecipe: (data) => async (dispatch) => {
 		try {
-			// dispatch(recipesActionCreators.setIsLoading(true));
-			// await api.post(`items`, ...data);
-			// dispatch(recipesActionCreators.setRecipes(data));
-			// dispatch(recipesActionCreators.getRecipes());
+			dispatch(recipesActionCreators.setIsLoading(true));
+			await api.post(`items`, data);
+			dispatch(recipesActionCreators.setRecipes(data));
+			dispatch(recipesActionCreators.getRecipes());
 		} catch (error) {
 			dispatch(recipesActionCreators.setIsLoading(false));
 		}

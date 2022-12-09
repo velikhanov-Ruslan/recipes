@@ -24,7 +24,6 @@ const CreateForm = ({ closeModal, type, id }) => {
 		if (type === "update") {
 			updateRecipe(id, formData);
 		} else {
-			console.log(formData);
 			createRecipe(formData);
 			closeModal();
 		}

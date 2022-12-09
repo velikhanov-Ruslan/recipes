@@ -9,9 +9,6 @@ const Listing = ({ items, updateReciep }) => {
       itemLayout="vertical"
       size="large"
       pagination={{
-        onChange: (page) => {
-          console.log(page);
-        },
         pageSize: 3,
       }}
       dataSource={items}
