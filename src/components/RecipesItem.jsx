@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { LikeOutlined } from '@ant-design/icons';
-import { List, Space, Button, Image, Modal } from "antd";
+import { List, Space, Button, Image, Modal, Tooltip } from "antd";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import CreateForm from './CreateForm';
 import routeNames from '../router';
+
 
 const RecipesItem = ({ title, composition, description, complexity, likes, img, id }) => {
 	const IconText = ({ icon, text }) => (
@@ -61,7 +62,19 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 			>
 				<List.Item.Meta
 					title={title}
-					description={Array.isArray(composition) ? composition.join(", ") : composition}
+					description={
+						Array.isArray(composition) ? composition.map((text, i) => {
+							return <Tooltip
+								key={`tooltip-${i}`}
+								title={`Можнно заменить на: ${Array.isArray(text.items)
+									? text.items.map(item => item)
+									:	text.items
+								}`}
+							>
+								<span>{`${text.item} `}</span>
+							</Tooltip>
+						}) : <span>{composition[0]}</span>
+					}
 				/>
 				{description}
 			</List.Item>
@@ -76,7 +89,6 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 				<CreateForm
 					closeModal={handleCancel}
 					type={"update"} id={id}
-					composition={composition}
 				/>
 			</Modal>
 		</>

@@ -7,7 +7,7 @@ import Error from "./Error";
 
 const { TextArea } = Input;
 
-const CreateForm = ({ closeModal, type, id}) => {
+const CreateForm = ({ closeModal, type, id }) => {
 	const [data, setData] = useState({});
 	const { isLoading, error } = useSelector(state => state.auth);
 	const { createRecipe, setIsError, updateRecipe } = useAppDispatch();
@@ -17,7 +17,6 @@ const CreateForm = ({ closeModal, type, id}) => {
 			...data,
 			[field.name]: field.value
 		});
-
 		setIsError("");
 	}
 
@@ -25,6 +24,7 @@ const CreateForm = ({ closeModal, type, id}) => {
 		if (type === "update") {
 			updateRecipe(id, formData);
 		} else {
+			console.log(formData);
 			createRecipe(formData);
 			closeModal();
 		}
@@ -65,10 +65,10 @@ const CreateForm = ({ closeModal, type, id}) => {
 				</Form.Item>
 				<Form.Item
 					label="Фото"
-					name="img.src"
+					name="img"
 				>
 					<Input
-						name="img.src"
+						name="img"
 						type='file'
 						onChange={e => onChange(e.target)}
 					/>
@@ -93,6 +93,17 @@ const CreateForm = ({ closeModal, type, id}) => {
 				>
 					<TextArea
 						name="composition"
+						value={data?.composition ? [...data?.composition] : ""}
+						onChange={e => onChange(e.target)}
+						type={"text"}
+					></TextArea>
+				</Form.Item>
+				<Form.Item
+					label="Доп ингредиент"
+					name="items"
+				>
+					<TextArea
+						name="items"
 						value={data?.composition ? [...data?.composition] : ""}
 						onChange={e => onChange(e.target)}
 						type={"text"}
