@@ -5,6 +5,7 @@ import Error from "./Error";
 import { rules } from "../utils/rules";
 import { useAppDispatch } from "../hooks/useAppDispatch"
 import { useSelector } from "react-redux";
+import routeNames from "../router";
 
 const LoginForm = () => {
 	const [data, setData] = useState({});
@@ -64,7 +65,7 @@ const LoginForm = () => {
 					</Button>
 				</Form.Item>
 				<Form.Item wrapperCol={{ offset: 12, span: 16 }}>
-					<Link to={"/recipes"}>Пропустить</Link>
+					<Link to={routeNames.RECIPES}>Пропустить</Link>
 				</Form.Item>
 			</Form>
 		</Space>

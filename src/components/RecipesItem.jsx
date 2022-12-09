@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import CreateForm from './CreateForm';
+import routeNames from '../router';
 
 const RecipesItem = ({ title, composition, description, complexity, likes, img, id }) => {
 	const IconText = ({ icon, text }) => (
@@ -47,7 +48,7 @@ const RecipesItem = ({ title, composition, description, complexity, likes, img, 
 						<IconText icon={LikeOutlined} text={likesCount ? likesCount : 0} key="list-vertical-like-o" />
 					</Button> : null,
 					<div>Сложность: {complexity === 1 ? "Легкая" : "Средняя"}</div>,
-					<Link to={`/recipes/${id}`}>Подробнее о рецепте</Link>,
+					<Link to={`${routeNames.RECIPES}/${id}`}>Подробнее о рецепте</Link>,
 					isAuth ? <Button onClick={handleClickDeleteButton}>Удалить рецепт</Button> : null,
 					isAuth ? <Button onClick={handleUpdateRecipe}>Изменить рецепт</Button> : null
 				]}

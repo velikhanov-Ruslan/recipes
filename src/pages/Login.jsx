@@ -3,6 +3,7 @@ import { Layout, Row } from "antd"
 import LoginForm from '../components/LoginForm'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import routeNames from "../router"
 
 const Login = () => {
 	const { isAuth } = useSelector(state => state.auth);
@@ -10,7 +11,7 @@ const Login = () => {
 
 	useEffect(() => {
 		if (isAuth) {
-			navigate("/recipes");
+			navigate(routeNames.RECIPES);
 		}
 	}, [isAuth])
 
